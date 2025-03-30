@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 
 dotenv.config();
 
@@ -28,13 +28,22 @@ const run = async () => {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
     /************************************************
-     *              API ENDPOINT                    *
+     *              API ENDPOINT START              *
      * **********************************************/
     const db = client.db("todo-app-with-redux");
     const taskCollection = db.collection("tasks");
 
+    app.post("/task", async (req, res) => {
+      const task = req.body;
+      const result = await taskCollection.insertOne(task);
+      res.send(result);
+    });
 
+   
 
+    /************************************************
+     *              API ENDPOINT END                *
+     * **********************************************/
   } finally {
     // await client.close();
   }
