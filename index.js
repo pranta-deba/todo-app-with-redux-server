@@ -42,10 +42,18 @@ const run = async () => {
     app.get("/task/:id", async (req, res) => {
       const id = req.params.id;
       const result = await taskCollection.findOne({ _id: ObjectId(id) });
-      // console.log(result);
       res.send(result);
     });
 
+    app.get("/tasks", async (req, res) => {
+      let query = {};
+      if (req.query.priority) {
+        query.priority = req.query.priority;
+      }
+      const cursor = taskCollection.find(query);
+      const tasks = await cursor.toArray();
+      res.send({ status: true, data: tasks });
+    });
     /************************************************
      *              API ENDPOINT END                *
      * **********************************************/
