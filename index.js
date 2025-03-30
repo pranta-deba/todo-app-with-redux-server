@@ -20,6 +20,27 @@ const client = new MongoClient(process.env.DB_URL, {
   },
 });
 
+const run = async () => {
+  try {
+    await client.connect();
+    await client.db("admin").command({ ping: 1 });
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
+    /************************************************
+     *              API ENDPOINT                    *
+     * **********************************************/
+    const db = client.db("todo-app-with-redux");
+    const taskCollection = db.collection("tasks");
+
+
+
+  } finally {
+    // await client.close();
+  }
+};
+run().catch((err) => console.log(err));
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
