@@ -87,7 +87,7 @@ const run = async () => {
 run().catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("todo app server running..........");
 });
 
 app.listen(port, () => {
