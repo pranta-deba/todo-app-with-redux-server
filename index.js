@@ -57,14 +57,14 @@ const run = async () => {
 
     app.delete("/task/:id", async (req, res) => {
       const id = req.params.id;
-      const result = await taskCollection.deleteOne({ _id: ObjectId(id) });
+      const result = await taskCollection.deleteOne({ _id: new ObjectId(id) });
       res.send(result);
     });
 
     app.put("/task/:id", async (req, res) => {
       const id = req.params.id;
       const task = req.body;
-      const filter = { _id: ObjectId(id) };
+      const filter = { _id: new ObjectId(id) };
       const updateDoc = {
         $set: {
           isCompleted: task.isCompleted,
